@@ -13,7 +13,7 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   final floating = Floating();
   String pipStatus = 'PipStatus.disabled';
-
+  bool pipOnLeave = false;
   Future<void> enablePip(
     BuildContext context, {
     bool autoEnable = false,
@@ -79,15 +79,22 @@ class _MapScreenState extends State<MapScreen> {
                         children: [
                           ElevatedButton.icon(
                             onPressed: () => enablePip(context),
-                            label: const Text('Enable PiP'),
+                            label: const Text('Enter into immediate PiP'),
                             icon: const Icon(Icons.picture_in_picture),
                           ),
                           const SizedBox(height: 12),
-                          Text(pipStatus),
                           ElevatedButton.icon(
-                            onPressed: () =>
-                                enablePip(context, autoEnable: true),
-                            label: const Text('Enable PiP on app minimize'),
+                            onPressed: () {
+                              setState(() {
+                                pipOnLeave = !pipOnLeave;
+                              });
+                              if (pipOnLeave) {
+                                enablePip(context, autoEnable: true);
+                              }
+                            },
+                            label: pipOnLeave
+                                ? const Text('Disable PiP on app minimize')
+                                : const Text('Enable PiP on app minimize'),
                             icon: const Icon(Icons.auto_awesome),
                           ),
                         ],

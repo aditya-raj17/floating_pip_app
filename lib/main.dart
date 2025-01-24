@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:floating_pip_app/map_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
